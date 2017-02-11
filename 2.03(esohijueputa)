@@ -1,0 +1,62 @@
+import java.util.*;
+
+public class Main {
+    
+    
+     
+    public static void main(String[] args) {
+        Scanner e = new Scanner (System.in);
+        int c= e.nextInt(),n,s;
+        for (int k = 0; k < c;k++) {
+            s = 1;
+            n = e.nextInt();
+        
+            int[][] ady = new int[n][n];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    ady[i][j] = e.nextInt();
+                }            
+            }
+            int i = 0;
+                for (int j = 0; j < n; j++) {
+                    if (ady[i][j] == 0){
+                        
+                    }else{
+                        if (j == 1){
+                            s += 1;
+                            
+                        }
+                        for (int l = j; l > i; l--) {
+                            if(j!=l && ady[j][l] == 1){
+                                s += 1;
+                                break;
+                                
+                            }
+                        }
+                    }
+                }
+            System.out.println(s);    
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+    }
+}
+        
+        
+        
+        
+        
+    
+   
+        
+        
+        
+  
+         
+
