@@ -1,0 +1,65 @@
+import java.util.*;
+
+public class Main {
+    
+    public static int max = 0;
+    public static void permute(int b, int n, String res, int s,int[] array,String[] array2) {
+        if (s == n) {
+            array2 = res.split(" ");
+            
+                
+            int p = 0;
+            for (int i = 0; i < n; i++) {
+                
+                if (array2[i].equals("1")){
+                    
+                    p += array[i];
+                    if ((i != 0) && (array2[i-1].equals("1"))){
+                        p-= array[i-1];
+                    }
+                }
+            }
+            
+            if (p > max){
+                max = p;
+            }
+        } else {
+            for (int i = 0; i < b; i++) {
+                permute(b, n, res + i + " ", s + 1,array,array2);
+            }
+        }
+    }    
+    public static void main(String[] args) {
+        Scanner e = new Scanner (System.in);
+        int n = e.nextInt();
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = e.nextInt();
+        }
+        String[] aux = new String[n];
+       
+        permute(2,n,"",0,nums,aux);
+        System.out.println(max);
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+   
+        
+        
+        
+  
+         
+    }
+            
+
+}
