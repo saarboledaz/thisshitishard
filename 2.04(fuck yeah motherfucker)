@@ -1,0 +1,74 @@
+import java.util.*;
+public class Main {
+    static int m;
+    static int n;
+    static ArrayList<Integer> pasos = new ArrayList<>();
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        int C = e.nextInt();
+        for(int k = 0;k<C;k++) {
+            pasos.clear();
+            m = e.nextInt();
+            n = e.nextInt();
+            int p = 0;
+            String ma[][] = new String[m][n];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    ma[i][j] = e.next();
+                }
+            }
+            can(0, 0, 0, ma);
+            if (pasos.size() > 0) {
+                System.out.println(Collections.min(pasos));
+            } else {
+                System.out.println(-1);
+            }
+       }
+    }
+
+
+    public static void can(int x, int y, int p, String ma[][]){
+        if (x<(m-1) && !ma[x+1][y].equals("#")){
+            x++;
+            ma[x][y]="#";
+            p++;
+            if(x == m-1 && y == n-1){
+                pasos.add(p);
+            }else{
+                can(x,y,p,ma);
+            }
+        }
+        if(y<(n-1) && !ma[x][y+1].equals("#")){
+            y++;
+            ma[x][y]="#";
+            p++;
+            if(x == m-1 && y == n-1){
+                pasos.add(p);
+            }else{
+                can(x,y,p,ma);
+            }
+        }
+        if (x>0 && !ma[x-1][y].equals("#")){
+            x--;
+            ma[x][y]="#";
+            p++;
+            if(x == m-1 && y == n-1){
+                pasos.add(p);
+            }else{
+                can(x,y,p,ma);
+            }
+        }
+        if (y>0 && !ma[x][y-1].equals("#")){
+            y--;
+            ma[x][y]="#";
+            p++;
+            if(x == m-1 && y == n-1){
+                pasos.add(p);
+            }else{
+                can(x,y,p,ma);
+            }
+        }
+
+    }
+
+}
