@@ -1,0 +1,39 @@
+import java.util.*;
+public class Main {
+    
+    static ArrayList<Integer> pasos = new ArrayList<>();
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        int x,y,c = e.nextInt();
+        byte z[][]={{6,5,4,5,4,5,4,5},
+            {5,4,5,4,3,4,3,4},
+            {4,5,4,3,4,3,4,3},
+            {5,4,3,4,3,2,3,2},
+            {4,3,4,3,2,3,2,3},
+            {5,4,3,2,3,4,1,2},
+            {4,3,4,3,2,1,4,3},
+            {5,4,3,2,3,2,3,0}};
+        HashMap <String,Integer> h = new HashMap <String,Integer>();
+        h.put("A", 1);
+        h.put("B", 2);
+        h.put("C", 3);
+        h.put("D", 4);
+        h.put("E", 5);
+        h.put("F",6);
+        h.put("G",7);
+        h.put("H",8);
+        String o,r;
+        for (int i = 0; i < c; i++) {
+            o = e.next();
+            
+            x = e.nextInt()-1;
+            y = h.get(o)-1;
+            System.out.println(z[x][y]);
+        }
+        
+    
+
+    }
+
+}
+
