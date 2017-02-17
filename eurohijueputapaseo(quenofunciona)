@@ -1,0 +1,71 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+import java.util.HashMap;
+public class Main {
+    
+    public static int y;
+    public static ArrayList <Integer> l = new ArrayList <>();
+    
+
+    
+    
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        int count,x,c = e.nextInt();
+        
+        String m[][]= new String[c][c];
+        
+        HashMap <Integer,Integer> visited = new HashMap <Integer,Integer>();
+        
+        for (int i = 0; i < c; i++) {
+            
+            for (int j = 0; j < c; j++) {
+                m[i][j] = e.next();
+            }
+        }
+        for (int i = 0; i < c; i++) {
+            
+           
+            x = 0;
+            count = 1;
+            visited.clear(); 
+            visited.put(i,1);
+            dis(c,x,m,i,count,visited);
+        }
+        Collections.sort(l);
+        
+        
+        System.out.println(l.get(0));
+        
+        
+
+        
+        
+        
+    
+
+    }
+    public static void dis(int c,int x,String[][] a2,int i,int counter,HashMap visited){
+        if(counter < c){
+            for (int j = 0; j < c; j++) {
+                if(!(a2[i][j].equals("n.a")) && !(visited.containsKey(j)) && i != j){
+                    y = Integer.parseInt(a2[i][j]);
+                    x += y;
+                    visited.put(j, 1);
+                    counter += 1;
+                    dis(c,x,a2,j,counter,visited);
+                    
+                }  
+            }
+        } else{
+            l.add(x);
+            
+            
+        }
+        
+    }
+    
+
+}
+
