@@ -1,0 +1,68 @@
+//Lista de reproducción
+
+import java.util.*;
+
+public class Main {
+
+    public static int N, M;
+    public static int menor, menor_global;
+    public static int[] duraciones;
+    public static boolean verificar;
+
+    public static void permute(int b, int n, String res, int s) {
+        if (s == n) {
+            String[] resString = res.split(" ");
+            verificar = false;
+            menor = M;
+            for (int i = 0; i < n; i++) {
+                if (Integer.parseInt(resString[i]) == 1) {
+                    menor -= duraciones[i];
+                    if (menor < 0) {
+                        menor = M;
+                        break;
+                    }
+                }
+            }
+            if (menor == 0) {
+                verificar = true;
+            } else {
+                if (menor < menor_global) {
+                    menor_global = menor;
+                }
+            }
+        } else {
+            for (int i = 0; i < b; i++) {
+                if (verificar) {
+                    break;
+                } else {
+                    permute(b, n, res + i + " ", s + 1);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] agrs) {
+        Scanner entrada = new Scanner(System.in);
+        byte c = entrada.nextByte();
+        for (int i = 0; i < c; i++) {
+            M = entrada.nextByte();
+            verificar = false;
+            menor_global = M;
+            N = entrada.nextByte();
+            duraciones = new int[N];
+            for (int j = 0; j < N; j++) {
+                duraciones[j] = entrada.nextInt();
+            }
+
+            permute(2, N, "", 0);
+            if (verificar) {
+                System.out.println(0);
+            }
+
+            if (!verificar) {
+                System.out.println(menor_global);
+            }
+        }
+    }
+
+}
