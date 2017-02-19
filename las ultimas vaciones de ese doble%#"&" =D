@@ -1,0 +1,90 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Collections;
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        HashMap<Integer,Integer> sabado = new HashMap<>();
+        ArrayList<Integer> horas_finales_sabado = new ArrayList<>();
+        HashMap<Integer,Integer> domingo = new HashMap<>();
+        ArrayList<Integer> horas_finales_domingo = new ArrayList<>();
+        HashMap<Integer,Integer> lunes = new HashMap<>();
+        ArrayList<Integer> horas_finales_lunes = new ArrayList<>();
+        int f = e.nextInt(),familiares_visitados=0;
+        String dia_inicio,hora_inicio,dia_final,hora_final;
+        for(int i = 0;i<f;i++){
+            dia_inicio = e.next();
+            hora_inicio = e.next();
+            hora_inicio = hora_inicio+e.next();
+            dia_final = e.next();
+            if(dia_inicio.equals(dia_final)){
+                hora_final=e.next();
+                hora_final=hora_final+e.next();
+                switch (dia_inicio){
+                    case "sabado":
+                        if(Integer.parseInt(hora_inicio)>=900 && !(Integer.parseInt(hora_final)>0000 && (Integer.parseInt(hora_final)<900))) {
+                            sabado.put(Integer.parseInt(hora_final), Integer.parseInt(hora_inicio));
+                            horas_finales_sabado.add(Integer.parseInt(hora_final));
+                        }
+                        break;
+                    case "domingo":
+                        if(Integer.parseInt(hora_inicio)>=900 && !(Integer.parseInt(hora_final)>0000 && (Integer.parseInt(hora_final)<900))) {
+                            domingo.put(Integer.parseInt(hora_final), Integer.parseInt(hora_inicio));
+                            horas_finales_domingo.add(Integer.parseInt(hora_final));
+                        }
+                        break;
+                    case "lunes":
+                        if(Integer.parseInt(hora_inicio)>=900 && !(Integer.parseInt(hora_final)>0000 && (Integer.parseInt(hora_final)<900))) {
+                            lunes.put(Integer.parseInt(hora_final), Integer.parseInt(hora_inicio));
+                            horas_finales_lunes.add(Integer.parseInt(hora_final));
+                        }
+                        break;
+                }
+            }else{
+                hora_final=e.next();
+                hora_final=hora_final+e.next();
+            }
+
+        }
+
+        Collections.sort(horas_finales_sabado);
+        Collections.sort(horas_finales_domingo);
+        Collections.sort(horas_finales_lunes);
+        if(horas_finales_sabado.size()==1){
+            familiares_visitados++;
+        }else if(horas_finales_sabado.size()>1){
+            familiares_visitados++;
+            for (int i = 1; i < horas_finales_sabado.size(); i++) {
+                if(sabado.get(horas_finales_sabado.get(i))>horas_finales_sabado.get(i-1)){
+                    familiares_visitados++;
+                }
+            }
+        }
+
+        if(horas_finales_domingo.size()==1){
+            familiares_visitados++;
+        }else if(horas_finales_domingo.size()>1){
+            familiares_visitados++;
+            for (int i = 1; i < horas_finales_domingo.size(); i++) {
+                if(domingo.get(horas_finales_domingo.get(i))>horas_finales_domingo.get(i-1)){
+                    familiares_visitados++;
+                }
+            }
+        }
+
+        if(horas_finales_lunes.size()==1){
+            familiares_visitados++;
+        }else if(horas_finales_lunes.size()>1){
+            familiares_visitados++;
+            for (int i = 1; i < horas_finales_lunes.size(); i++) {
+                if(lunes.get(horas_finales_lunes.get(i))>horas_finales_lunes.get(i-1)){
+                    familiares_visitados++;
+                }
+            }
+        }
+        System.out.println(familiares_visitados);
+    }
+
+}
