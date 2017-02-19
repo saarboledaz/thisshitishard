@@ -1,0 +1,30 @@
+//Pago en Beris
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int N = entrada.nextInt();
+        long B, aux;
+        int[] beris = {10000, 5000, 1000, 500, 100, 50, 10, 5, 1};
+        for (int i = 0; i < N; i++) {
+            B = entrada.nextLong();
+            for (int j = 0; j <= 8; j++) {
+                if (B >= beris[j]) {
+                    aux = (B / beris[j]);
+                    B -= aux * beris[j];
+                    if (B != 0) {
+                        System.out.print(aux + ":" + beris[j] + " ");
+                    } else {
+                        System.out.print(aux + ":" + beris[j]);
+                    }
+                }
+            }
+            System.out.println("");
+
+        }
+    }
+
+}
