@@ -1,0 +1,75 @@
+//Trampolín en South Park
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        byte c = entrada.nextByte();
+        int n, aux, aux_;
+
+        for (int k = 1; k <= c; k++) {
+            n = entrada.nextInt();
+            int suma_pataleta = 0;
+            int[] ti = new int[n];
+            int[] pi = new int[n];
+            int[] orden_ti = new int[n];
+            int[] orden_pi = new int[n];
+            boolean verificar;
+            for (int i = 0; i < n; i++) {
+                orden_ti[i] = 1;
+            }
+            for (int j = 0; j < n; j++) {
+                ti[j] = entrada.nextInt();
+                pi[j] = entrada.nextInt();
+            }
+            for (int i = 1; i < n; i++) {
+                for (int j = i - 1; j >= 0; j--) {
+                    if (pi[i] > pi[j]) {
+                        aux = pi[i];
+                        aux_ = ti[i];
+                        pi[i] = pi[j];
+                        ti[i] = ti[j];
+                        pi[j] = aux;
+                        ti[j] = aux_;
+                        i--;
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++) {
+                verificar = true;
+                if (orden_ti[(ti[i]) / 10] == 1) {
+                    orden_ti[(ti[i]) / 10] = ti[i];
+                    orden_pi[(ti[i]) / 10] = pi[i];
+                } else {
+                    for (int j = i - 1; j >= 0; j--) {
+                        if (orden_ti[j] == 1) {
+                            verificar = false;
+                            orden_ti[j] = ti[i];
+                            orden_pi[j] = pi[i];
+                            break;
+                        }
+                    }
+                    if (verificar) {
+                        for (int j = n - 1; j >= 0; j--) {
+                            if (orden_ti[j] == 1) {
+                                orden_ti[j] = ti[i];
+                                orden_pi[j] = pi[i];
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < n; i++) {
+                if (orden_ti[i] / 10 >= i) {
+                } else {
+                    suma_pataleta += orden_pi[i];
+                }
+            }
+            System.out.println("Caso " + k + ": " + suma_pataleta);
+        }
+    }
+
+}
