@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -6,6 +7,25 @@ public class Main {
     
     public static int y;
     public static ArrayList <Integer> l = new ArrayList <>();
+    public static void dis(int c, int x, String[][] a2, int i, int counter, int[] v) {
+        if (counter < c) {
+            for (int j = 0; j < c; j++) {
+                if (!(a2[i][j].equals("n.a")) && !(v[j] == 1) && i != j) {
+                    y = Integer.parseInt(a2[i][j]);
+                    x += y;
+                    v[j] = 1;
+                    counter += 1;
+                    System.out.println(x + " " + i + " " + j + " " + counter);
+                    dis(c, x, a2, j, counter, v);
+                    System.out.println(x + " " + i + " " + j + " " + counter);
+                }
+            }
+        } else {
+            l.add(x);
+
+        }
+
+    }
     
 
     
@@ -16,7 +36,7 @@ public class Main {
         
         String m[][]= new String[c][c];
         
-        HashMap <Integer,Integer> visited = new HashMap <Integer,Integer>();
+        
         
         for (int i = 0; i < c; i++) {
             
@@ -29,9 +49,9 @@ public class Main {
            
             x = 0;
             count = 1;
-            visited.clear(); 
-            visited.put(i,1);
-            dis(c,x,m,i,count,visited);
+            int[] v = new int[c];
+            v[i] = 1;
+            dis(c,x,m,i,count,v);
         }
         Collections.sort(l);
         
@@ -46,26 +66,7 @@ public class Main {
     
 
     }
-    public static void dis(int c,int x,String[][] a2,int i,int counter,HashMap visited){
-        if(counter < c){
-            for (int j = 0; j < c; j++) {
-                if(!(a2[i][j].equals("n.a")) && !(visited.containsKey(j)) && i != j){
-                    y = Integer.parseInt(a2[i][j]);
-                    x += y;
-                    visited.put(j, 1);
-                    counter += 1;
-                    dis(c,x,a2,j,counter,visited);
-                    
-                }  
-            }
-        } else{
-            l.add(x);
-            
-            
-        }
-        
-    }
+
     
 
 }
-
