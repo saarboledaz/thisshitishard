@@ -1,0 +1,74 @@
+// europaseo(time limit)
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static int C;
+    public static boolean[] visited;
+    public static int[][] costos;
+    public static int menor_parcial;
+    public static int menor_global = 0;
+    public static String[] RES;
+    public static boolean verificador;
+
+    public static void permute(int[] array, String res, int s) {
+        if (s == array.length) {
+            menor_parcial = 0;
+            verificador = true;
+            RES = res.split(" ");
+            for (int i = 0; i < C - 1; i++) {
+                if (costos[Integer.parseInt(RES[i])][Integer.parseInt(RES[i + 1])] != -1) {
+                    menor_parcial += costos[Integer.parseInt(RES[i])][Integer.parseInt(RES[i + 1])];
+                } else {
+                    verificador = false;
+                    break;
+                }
+            }
+            if (menor_global == 0 && verificador) {
+                menor_global = menor_parcial;
+            } else {
+                if (menor_parcial < menor_global && verificador) {
+                    menor_global = menor_parcial;
+                }
+            }
+        } else {
+            for (int i = 0; i < array.length; i++) {
+                if (visited[i]) {
+                    continue;
+                }
+                visited[i] = true;
+                permute(array, res + array[i] + " ", s + 1);
+                visited[i] = false;
+            }
+        }
+    }
+
+    public static void main(String args[]) {
+        Scanner entrada = new Scanner(System.in);
+        C = entrada.nextInt();
+        visited = new boolean[C];
+        int[] ciudades = new int[C];
+        String aux;
+        costos = new int[C][C];
+        for (int i = 0; i < C; i++) {
+            for (int j = 0; j < C; j++) {
+                aux = entrada.next();
+                if (aux.equals("n.a")) {
+                    costos[i][j] = -1;
+                } else {
+                    costos[i][j] = Integer.parseInt(aux);
+                }
+            }
+        }
+        for (int i = 0; i < C; i++) {
+            ciudades[i] = i;
+        }
+        permute(ciudades, "", 0);
+        if (menor_global == 0) {
+            System.out.println("imposible");
+        } else {
+            System.out.println(menor_global);
+        }
+    }
+}
