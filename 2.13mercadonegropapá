@@ -1,0 +1,25 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner (System.in);
+        long numero,respuesta,costoNuevo,costoViejo;
+        int dato = entrada.nextInt();
+        while(dato != 0){
+            PriorityQueue <Long> arregloNumeros = new PriorityQueue<Long>();
+            for (int i = 0; i < dato; i++) {
+                numero = entrada.nextLong();
+                arregloNumeros.add(numero);
+            }respuesta = 0;
+            costoViejo = arregloNumeros.poll() + arregloNumeros.poll();
+            respuesta += costoViejo;
+            arregloNumeros.add(costoViejo);
+            while(arregloNumeros.size() > 1){
+               costoViejo = arregloNumeros.poll() + arregloNumeros.poll();
+               respuesta += costoViejo;
+               arregloNumeros.add(costoViejo);
+            }
+            System.out.println(respuesta);
+            dato = entrada.nextInt();
+        }
+    }
+}
