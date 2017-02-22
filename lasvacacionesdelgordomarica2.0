@@ -62,7 +62,7 @@ public class Main {
         int cont = 0;
         for (int i = starts + 1; i < f; i++) {
            
-            if ((hglobal[i][0] >= correcto.get(cont)[1]) && valido(hglobal[i][0], hglobal[i][1])) {
+            if ((hglobal[i][0] > correcto.get(cont)[1]) && valido(hglobal[i][0], hglobal[i][1])) {
                 correcto.add(hglobal[i]);
                 cont += 1;
             }
