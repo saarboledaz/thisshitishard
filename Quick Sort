@@ -1,0 +1,59 @@
+//QuickSort
+
+import java.util.*;
+
+public class Main {
+
+    public static int[] arreglo;
+
+    public static int partition(int[] X, int a, int b) {
+        int i = a + 1;
+        int pivote = a;
+        for (int j = a; j < b; j++) {
+            if (arreglo[pivote] > arreglo[i]) {
+                int aux = arreglo[pivote];
+                arreglo[pivote] = arreglo[i];
+                arreglo[i] = aux;
+                pivote++;
+                i++;
+            } else {
+                i++;
+            }
+        }
+        return (pivote);
+
+    }
+
+    public static void quickSort(int[] a, int N) {
+        quickSort(arreglo, 0, N - 1);
+    }
+
+    public static void quickSort(int[] ar, int a, int b) {
+        if (b - a > 1) {
+            int h = partition(arreglo, a, b);
+
+            quickSort(arreglo, a, h - 1);
+            quickSort(arreglo, h + 1, b);
+        } else if (arreglo.length == 2) {
+            if (arreglo[0] > arreglo[1]) {
+                int aux = arreglo[1];
+                arreglo[1] = arreglo[0];
+                arreglo[0] = aux;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int n = entrada.nextInt();
+        arreglo = new int[n];
+        for (int i = 0; i < n; i++) {
+            arreglo[i] = entrada.nextInt();
+        }
+
+        quickSort(arreglo, n);
+        for (int f = 0; f < n; f++) {
+            System.out.print(arreglo[f] + " ");
+        }
+    }
+}
