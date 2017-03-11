@@ -1,0 +1,100 @@
+//marcadores de colores
+
+import java.util.Scanner;
+import java.util.Arrays;
+import java.util.ArrayList;
+
+public class Main {
+
+    public static int[] quickSort(int[] a, int N) {
+        int[] arreglo = new int[N];
+        arreglo = quickSort(a, 0, N - 1);
+        return (arreglo);
+    }
+
+    public static int[] quickSort(int[] ar, int a, int b) {
+        if (b - a > 1) {
+            int i = a + 1;
+            int pivote = a;
+            for (int j = a; j < b; j++) {
+                if (ar[pivote] > ar[i]) {
+                    int aux = ar[pivote];
+                    ar[pivote] = ar[i];
+                    ar[i] = aux;
+                    pivote++;
+                    aux = ar[pivote];
+                    ar[pivote] = ar[i];
+                    ar[i] = aux;
+                    i++;
+                } else {
+                    i++;
+                }
+            }
+
+            quickSort(ar, a, pivote - 1);
+            quickSort(ar, pivote + 1, b);
+        } else if (b - a == 1) {
+            if (ar[0] > ar[1]) {
+                int aux = ar[1];
+                ar[1] = ar[0];
+                ar[0] = aux;
+
+            }
+        }
+        return (ar);
+    }
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int N = entrada.nextInt(), M = entrada.nextInt(), cierre = 0, cierrePerfecto = 0;
+        ArrayList<int[]> marcadores = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            marcadores.add(new int[2]);
+            marcadores.get(i)[1] = entrada.nextInt();
+            marcadores.get(i)[0] = entrada.nextInt();
+        }
+        ArrayList<int[]> tapas = new ArrayList<>();
+        for (int i = 0; i < M; i++) {
+            tapas.add(new int[2]);
+            tapas.get(i)[1] = entrada.nextInt();
+            tapas.get(i)[0] = entrada.nextInt();
+        }
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (marcadores.get(i)[0] == tapas.get(j)[0] && marcadores.get(i)[1] == tapas.get(j)[1]) {
+                    N--;
+                    M--;
+                    marcadores.remove(i);
+                    tapas.remove(j);
+                    i--;
+                    cierre++;
+                    cierrePerfecto++;
+                    break;
+                }
+            }
+        }
+        int[] marcadores_ordenados = new int[N];
+        for (int i = 0; i < N; i++) {
+            marcadores_ordenados[i] = marcadores.get(i)[0];
+        }
+        int[] tapas_ordenados = new int[M];
+        for (int i = 0; i < M; i++) {
+            tapas_ordenados[i] = tapas.get(i)[0];
+        }
+        marcadores_ordenados = quickSort(marcadores_ordenados, marcadores_ordenados.length);
+        tapas_ordenados = quickSort(tapas_ordenados, tapas_ordenados.length);
+        int j = 0, k = 0;
+        while (j != marcadores_ordenados.length && k != tapas_ordenados.length) {
+            if (marcadores_ordenados[j] < tapas_ordenados[k]) {
+                j++;
+            } else if (marcadores_ordenados[j] > tapas_ordenados[k]) {
+                k++;
+            } else {
+                cierre++;
+                k++;
+                j++;
+            }
+        }
+        System.out.println(cierre + " " + cierrePerfecto);
+    }
+}
