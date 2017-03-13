@@ -1,0 +1,76 @@
+//marcadores de colores
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+
+    static class Pair implements Comparable<Pair> {
+
+        int first;
+        int second;
+
+        public Pair(int uno, int dos) {
+            first = uno;
+            second = dos;
+        }
+
+        @Override
+        public int compareTo(Pair o) {
+            if (this.second == o.second) {
+                return Integer.compare(this.first, o.first);
+            }
+            return Integer.compare(this.second, o.second);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner entrada = new Scanner(System.in);
+        int N = entrada.nextInt(), M = entrada.nextInt(), cierre = 0, cierrePerfecto = 0;
+
+        ArrayList<Pair> marcadores = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            marcadores.add(new Pair(entrada.nextInt(), entrada.nextInt()));
+        }
+
+        ArrayList<Pair> tapas = new ArrayList<>();
+
+        for (int i = 0; i < M; i++) {
+            tapas.add(new Pair(entrada.nextInt(), entrada.nextInt()));
+        }
+
+        Collections.sort(marcadores);
+        Collections.sort(tapas);
+
+        for (int i = 0; i < N; i++) {
+            Pair a = marcadores.get(i);
+            int aux = Collections.binarySearch(tapas, a);
+            if (aux >= 0) {
+                cierrePerfecto++;
+                cierre++;
+                tapas.remove(aux);
+                marcadores.remove(i);
+                i--;
+                N--;
+            }
+        }
+
+        int j = 0, k = 0;
+
+        while (j != N && k != M) {
+            if (marcadores.get(j).second < tapas.get(k).second) {
+                j++;
+            } else if (marcadores.get(j).second > tapas.get(k).second) {
+                k++;
+            } else {
+                cierre++;
+                k++;
+                j++;
+            }
+        }
+        System.out.println(cierre + " " + cierrePerfecto);
+    }
+}
