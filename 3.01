@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        int n=e.nextInt(),k = e.nextInt()-1,end = -1,begin = 0;
+        int[] num = new int[n];
+        int[] vec = new int[2];       
+        
+        for (int i = 0; i < n; i++) {
+            num[i] = e.nextInt();
+            
+        }
+        Arrays.sort(num);
+        for (int i = 0; i < n; i++) {
+            end += n;
+            if (end > k && begin < k){
+                vec[0] = num[i];
+                vec[1] = num[k-begin];
+                break;
+            }
+            begin += n;
+        }
+        System.out.println(vec[0]+" "+vec[1]);
+        
+        
+    }
+}
