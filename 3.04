@@ -1,0 +1,25 @@
+import java.util.*;
+public class Main {
+    
+    public static void main(String[] args) {
+       Scanner entrada = new Scanner(System.in);
+       int n = entrada.nextInt();
+       int a = entrada.nextInt();
+       int A[] = new int[n];
+       for(int i=0;i<n;i++){
+        A[i]=entrada.nextInt();   
+       }
+       Arrays.sort(A);
+       for(int i=0;i<a;i++){
+       int b = entrada.nextInt();
+       int c= Arrays.binarySearch(A,b);
+       if(c>0){
+       System.out.println(b+" se encuentra de "+(c+1));
+       }
+       else{
+           System.out.println(b+" no se encuentra");
+       }
+       }
+    }
+    
+}
