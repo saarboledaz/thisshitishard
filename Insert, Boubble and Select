@@ -1,0 +1,124 @@
+//BubbleSort
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int n = entrada.nextInt(), aux;
+        int[] l = new int[n];
+        for (int i = 0; i < n; i++) {
+            l[i] = entrada.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < n - i; j++) {
+                if (l[j - 1] > l[j]) {
+                    aux = l[j - 1];
+                    l[j - 1] = l[j];
+                    l[j] = aux;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            System.out.print(l[i] + " ");
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//InsertSort
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int n = entrada.nextInt(), aux;
+        int[] l = new int[n];
+        for (int i = 0; i < n; i++) {
+            l[i] = entrada.nextInt();
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = i - 1; j >= 0; j--) {
+                if (l[i] < l[j]) {
+                    aux = l[i];
+                    l[i] = l[j];
+                    l[j] = aux;
+                    i--;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            System.out.print(l[i] + " ");
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//SelectSort
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int n = entrada.nextInt(), aux = 0, aux1;
+        int[] l = new int[n];
+        for (int i = 0; i < n; i++) {
+            l[i] = entrada.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            aux = i;
+            for (int j = i; j < n - 1; j++) {
+                if (l[j + 1] < l[aux]) {
+                    aux = j + 1;
+                }
+            }
+            aux1 = l[aux];
+            l[aux] = l[i];
+            l[i] = aux1;
+
+        }
+        for (int i = 0; i < n; i++) {
+            System.out.print(l[i] + " ");
+        }
+    }
+
+}
+
