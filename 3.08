@@ -1,0 +1,124 @@
+import java.util.*;
+
+public class Main {
+    public static HashMap<Character, Integer> equivalencia = new HashMap<>();
+    public static class Cadena implements Comparable<Cadena>{
+        String cad;
+        int defe;
+        @Override
+        public int compareTo(Cadena o){
+            if(this.defe==o.defe){
+                 int compareTo = this.cad.compareTo(o.cad);
+                 return compareTo;
+            }else{
+                return Integer.compare(this.defe, o.defe);
+            }
+            
+        }
+        
+    }
+   public static int def = 0;
+   public static int def2 = 0;
+   public static void mergeSort(int[] inputArray) {
+        int size = inputArray.length;
+        if (size < 2) {
+            return;
+        }
+        int mid = (size+2-1) / 2;
+        int leftSize = mid;
+        int rightSize = size - mid;
+        int[] left = new int[leftSize];
+        int[] right = new int[rightSize];
+        for (int i = 0; i < mid; i++) {
+            left[i] = inputArray[i];
+
+        }
+        for (int i = mid; i < size; i++) {
+            right[i - mid] = inputArray[i];
+        }
+        mergeSort(left);
+        mergeSort(right);
+        merge(left, right, inputArray);
+    }
+    public static void merge(int[] left, int[] right, int[] arr) {
+        int leftSize = left.length;
+        int rightSize = right.length;
+        int i = 0, j = 0, k = 0;
+        while (i < leftSize && j < rightSize) {
+            if (left[i] <= right[j]) {
+                arr[k] = left[i];
+                //System.out.println("izq menor der "+arr[k]);
+                i++;
+                k++;
+                def2 += rightSize-j;
+            } else {
+                arr[k] = right[j];
+                //System.out.println("der menor izq "+arr[k]);
+                k++;
+                j++;
+                def += leftSize - i;
+            }
+        }
+        while (i < leftSize) {
+            arr[k] = left[i];
+            //System.out.println("autollenado izq "+arr[k]);
+            k++;
+            i++;
+            
+        }
+        while (j < rightSize) {
+            arr[k] = right[j];
+            //System.out.println("autollenado der "+arr[k]);
+            k++;
+            j++;
+            
+        }
+    }    
+
+    
+    public static int defecto(String s){
+        
+        
+        int[] convertido = new int[s.length()];
+        
+        for (int i = 0; i < s.length(); i++) {
+            convertido[i] = equivalencia.get(s.charAt(i));
+            
+        }
+        def = 0;
+        mergeSort(convertido);
+        return def;
+    }
+   
+
+    
+
+
+    
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        equivalencia.put('A',1);
+        equivalencia.put('C',2);
+        equivalencia.put('G',3);
+        equivalencia.put('T',4);
+        
+        
+        int n = e.nextInt(),m= e.nextInt(),d = e.nextInt();
+        
+        String str;
+        Cadena[] cadenas = new Cadena[n];
+        for (int j = 0; j < n; j++) {
+            str = e.next();
+            cadenas[j] = new Cadena();
+            cadenas[j].cad = str;
+            cadenas[j].defe = defecto(str);
+        }
+        
+        Arrays.sort(cadenas);
+
+        for (int j = 0; j < m; j++) {
+            System.out.println(cadenas[j].cad);
+        }
+        
+    }
+}
