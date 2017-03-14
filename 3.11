@@ -1,0 +1,23 @@
+
+import java.util.Scanner;
+import java.math.BigInteger;
+public class Main {
+
+
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        BigInteger[] ar = new BigInteger[1001];
+        ar[0] = new BigInteger("0");
+        ar[1] = new BigInteger("1");
+        ar[2] = new BigInteger("1");
+        for (int i = 3; i < 1001; i++) {
+            ar[i] =ar[i-2].add(ar[i-1]);
+        }
+        int c = e.nextInt();
+        for (int i = 0; i < c; i++) {
+            System.out.println(ar[e.nextInt()]);
+        }
+    }
+
+
+}
