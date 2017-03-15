@@ -1,0 +1,19 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        ArrayList<Integer> casas = new ArrayList<>();
+        int n = e.nextInt();
+        for (int i = 0;i<n;i++){
+            casas.add(e.nextInt());
+        }
+        n--;
+        Collections.sort(casas);
+        int A = e.nextInt()-1;
+        int B = n-A;
+        System.out.println(casas.get(B)-casas.get(A));
+    }
+}
