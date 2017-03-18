@@ -1,0 +1,32 @@
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner e = new Scanner(System.in);
+        int n = e.nextInt();
+        int[] casas = new int[n];
+        
+        for (int i = 0; i < n; i++) {
+            casas[i] = e.nextInt();
+            
+        }
+        Arrays.sort(casas);
+        int m;
+        long d = 0;
+        if(n % 2 == 0){
+            m = (n/2)-1;
+        }else{
+            m =(int) (n/2) ;
+            System.out.println(m);
+        }
+        for (int i = 0; i < n; i++) {
+            d += Math.abs(casas[i] - casas[m]);
+        }
+        System.out.println(casas[m]+" "+d);
+        
+
+    }
+
+}
