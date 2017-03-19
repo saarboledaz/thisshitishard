@@ -1,0 +1,46 @@
+//secuencia de divisores 3.5
+
+import java.util.*;
+
+public class Main {
+
+    public static int numDivisores(int n) {
+        int cont = 1;
+        int i = 2;
+        int contPrimo = 0;
+        while(i<=n){
+            if(n%i==0){
+                contPrimo++;
+                n = n/i;
+            }else{
+                cont = cont*(contPrimo +1);
+                i++;
+                contPrimo = 0;
+            }
+        }
+        return cont * (contPrimo + 1);
+    }
+
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+        int N = entrada.nextInt(), cont = 1;
+        ArrayList<Integer> sucesion = new ArrayList<>();
+        sucesion.add(1);
+        for (int i = 0; i < N; i++) {
+            int A = entrada.nextInt(), B = entrada.nextInt();
+            while (sucesion.get(sucesion.size() - 1) <= B) {
+                sucesion.add(cont, sucesion.get(cont - 1) + numDivisores(sucesion.get(cont - 1)));
+                cont++;
+            }
+            int contA = 0;
+            while (sucesion.get(contA) < A) {
+                contA++;
+            }
+            int contB = contA;
+            while (sucesion.get(contB) <= B) {
+                contB++;
+            }
+            System.out.println(contB);
+        }
+    }
+}
