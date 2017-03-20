@@ -1,0 +1,120 @@
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner e = new Scanner(System.in);
+        ArrayList<int[]> ordenar = new ArrayList<>();
+        ArrayList<Integer> lista_equipos = new ArrayList<>();
+        HashMap<Integer,Equipo> puntos_equipos = new HashMap<>();
+        int n = e.nextInt(),equipo,punto,tiempo;
+        String resultado;
+        for (int i = 0;i<n;i++){
+            int r = e.nextInt();
+            lista_equipos.clear();
+            puntos_equipos.clear();
+            ordenar.clear();
+            for (int j = 0;j<r;j++){
+                equipo = e.nextInt();
+                punto = e.nextInt();
+                tiempo = e.nextInt();
+                resultado = e.next();
+                if (!puntos_equipos.containsKey(equipo)){
+                    puntos_equipos.put(equipo,new Equipo());
+                    lista_equipos.add(equipo);
+                    puntos_equipos.get(equipo).agregar_registro(punto,tiempo,resultado);
+                }else{
+                    puntos_equipos.get(equipo).agregar_registro(punto,tiempo,resultado);
+                }
+            }
+            for(int j:lista_equipos){
+                ordenar.add(new int[]{j,puntos_equipos.get(j).puntos_resueltos,puntos_equipos.get(j).penalizacion_total()});
+            }
+            Collections.sort(ordenar, new Comparator<int[]>() {
+                @Override
+                public int compare(int[] o1, int[] o2) {
+                    if (o1[1]<o2[1]){
+                        return 1;
+                    }else if(o1[1]>o2[1]){
+                        return -1;
+                    }else{
+                        if (o1[2]>o2[2]){
+                            return 1;
+                        }else if(o1[2]<o2[2]){
+                            return -1;
+                        }else{
+                            if (o1[0]>o2[0]){
+                                return 1;
+                            }else{
+                                return -1;
+                            }
+                        }
+                    }
+                }
+            });
+            System.out.println("Maraton "+(i+1)+":");
+            for (int[] j:ordenar){
+                if (j[1]!=0){
+                    System.out.println(j[0]+" "+j[1]+" "+j[2]);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+}
+
+class Equipo{
+    int puntos_resueltos = 0;
+    HashMap<Integer,Punto> puntos = new HashMap<>();
+    ArrayList<Integer> registro_puntos = new ArrayList<>();
+    public void agregar_registro(int punto,int tiempo,String estado){
+        if (puntos.containsKey(punto)){
+            if (puntos.get(punto).ajustar_tiempo(tiempo,estado)){
+                puntos_resueltos++;
+            }
+        }else{
+            puntos.put(punto,new Punto());
+            registro_puntos.add(punto);
+            if (puntos.get(punto).ajustar_tiempo(tiempo,estado)){
+                puntos_resueltos++;
+            }
+        }
+    }
+
+    public int penalizacion_total(){
+        int penalizacion = 0;
+        for(int i:registro_puntos){
+            penalizacion+= puntos.get(i).tiempo_penalizacion();
+        }
+        return penalizacion;
+    }
+}
+
+class Punto{
+    int tiempo=0;
+    String estado = "I";
+
+    public boolean ajustar_tiempo(int tiempo,String estado){
+        if (estado.equals("I")&&!this.estado.equals("C")){
+            this.estado = estado;
+            this.tiempo+=20;
+            return false;
+        }else if(estado.equals("C")){
+            this.tiempo+=tiempo;
+            this.estado = estado;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public int tiempo_penalizacion(){
+        if (this.estado.equals("C")){
+            return this.tiempo;
+        }else{
+            return 0;
+        }
+    }
+}
