@@ -1,0 +1,169 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    
+    static class Punto implements Comparable<Punto> {
+        int x, y;
+        static String orderBy = "x";
+        
+        public Punto(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public String toString() {
+            return this.x + "  " + this.y;
+        }
+        
+        
+        
+        @Override
+        public int compareTo(Punto o) {
+            if(orderBy.equals("x")){
+                if(this.x == o.x)
+                    return Integer.compare(this.y, o.y);
+                else
+                    return Integer.compare(this.x, o.x);
+            }else{
+                if(this.y == o.y)
+                    return Integer.compare(this.x, o.x);
+                else
+                    return Integer.compare(this.y, o.y);
+            }
+        }
+    }
+    
+    static ArrayList<Punto> px = new ArrayList<>();
+    static ArrayList<Punto> py = new ArrayList<>();
+    
+    
+    public static void main(String[] args) throws IOException {
+        BufferedReader entrada = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder salida = new StringBuilder();
+        
+        
+        
+        int aux = 0, robots = 0, a = 0, b = 0;
+        long lado = 0;
+        int c1 = Integer.parseInt(entrada.readLine());
+        String line = "", t="";
+        
+        while(aux < c1){
+            line = entrada.readLine();
+            robots = Integer.parseInt(entrada.readLine());
+            
+            px = new ArrayList<>();
+            py = new ArrayList<>();
+            
+            for (int i = 0; i < robots; i++) {
+                line = entrada.readLine();
+                StringTokenizer str = new StringTokenizer(line);
+                a = Integer.parseInt(str.nextToken());
+                b = Integer.parseInt(str.nextToken());
+                
+                px.add(new Punto(a, b));
+                py.add(new Punto(a, b));
+                
+            }
+            
+            Punto.orderBy = "x";
+            Collections.sort(px);
+            Punto.orderBy = "y";
+            Collections.sort(py);
+        
+            Punto[] masCercano = closerPair(0, px.size()-1);
+            double sigma = dis(masCercano[0], masCercano[1]);
+            
+            Punto[] mF = closetSplitPair(sigma);
+            double sigma2 = dis(mF[0], mF[1]);
+            
+            if(sigma2 < sigma)
+                masCercano = mF;
+            
+            
+            lado = Math.max( Math.abs(masCercano[1].x - masCercano[0].x) , Math.abs(masCercano[1].y - masCercano[0].y) );
+            
+            salida.append(lado);
+            salida.append("\n");
+            
+            aux++;
+        }
+        System.out.print(salida.toString());
+        
+        
+        
+    }
+    
+   
+    
+    public static Punto[] closerPair(int i, int j){
+        
+        double dMax = Double.MAX_VALUE, temp=0;
+        Punto[] p = new Punto[2];
+        
+        for (int k = i; k < j; k++) {
+            temp = dis(px.get(k), px.get(k+1));
+            //System.out.println(temp);
+            if( temp < dMax){
+                dMax = temp;
+                p[0] = px.get(i);
+                p[1] = px.get(j);
+            }
+            
+            temp = dis(py.get(k), py.get(k+1));
+            //System.out.println(temp);
+            if( temp < dMax){
+                dMax = temp;
+                p[0] = py.get(i);
+                p[1] = py.get(j);
+            }
+            
+        }
+        return p;
+    }
+    
+    public static double dis(Punto a, Punto b){
+        return Math.hypot(b.x-a.x, b.y-a.y);
+    }
+    
+    
+    
+    public static Punto[] closetSplitPair(double sigma){
+        
+        int x = px.get((px.size()-1)/2).x;
+        
+        double menorD = sigma;
+        Punto[] mejorP = new Punto[2];
+        
+        double rs = x + sigma;
+        double ri = x - sigma;
+        ArrayList<Punto> sy = new ArrayList<>();
+        
+        for (int i = 0; i < py.size(); i++) {
+            if(py.get(i).x >= ri && py.get(i).x <= rs)
+                sy.add(py.get(i));
+        }
+        
+        
+        double d = 0;
+        for (int i = 0; i < sy.size()-7; i++) {
+            for (int j = i+1; j < i+7; j++) {
+                d = dis(sy.get(i), sy.get(j));
+                if(d < sigma){
+                    sigma = d;
+                    mejorP[0] = sy.get(i);
+                    mejorP[1] = sy.get(j);
+                }
+            }
+        }
+        return mejorP;
+    }
+    
+ }
