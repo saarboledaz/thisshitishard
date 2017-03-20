@@ -101,7 +101,7 @@ class Punto{
             this.estado = estado;
             this.tiempo+=20;
             return false;
-        }else if(estado.equals("C")){
+        }else if(estado.equals("C") && !this.estado.equals("C")){
             this.tiempo+=tiempo;
             this.estado = estado;
             return true;
